@@ -1,2 +1,6 @@
 # Ignore the learning folder
 learning/*
+
+# Ignore the virtual environments
+venv/*
+.venv/*
