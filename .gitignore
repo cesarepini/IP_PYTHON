@@ -4,3 +4,10 @@ learning/*
 # Ignore the virtual environments
 venv/*
 .venv/*
+
+# Ignore pycache folders and connected files
+__pycache__/*
+*.pyc
+
+# Ignore .pytest_cache folder
+.pytest_cache/*
