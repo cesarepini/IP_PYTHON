@@ -27,7 +27,7 @@ def date_extractor(filename: str) -> date | None:
     if not matches:
         logger.info(f'No date found in filename: {filename}')
         raise NoDateFoundError(f'No date found in filename: {filename}')
-    date_prefilter_pattern = r'^(19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01]])$'
+    date_prefilter_pattern = r'^(19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$'
     plausible_dates = []
     for m in matches:
         for pos in range(len(m) - 7): # minus 7 because we need the last 8 digits
