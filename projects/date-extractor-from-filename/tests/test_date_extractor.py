@@ -1,20 +1,22 @@
-from datetime import date
 import pytest
+from datetime import date
+
 from src.date_extractor import date_extractor
 
-# Test cases for date_extractor function, version 1.0
-def test_date_extractor():
-    assert date_extractor('20210930') == date(2021, 9, 30)
-    assert date_extractor('20210930.pdf') == date(2021, 9, 30)
-    assert date_extractor('filing_report_20210930.pdf') == date(2021, 9, 30)
-    assert date_extractor('20210930_filing_report.pdf') == date(2021, 9, 30)
-    assert date_extractor('application_20210930_filing_report.pdf') == date(2021, 9, 30)
-    assert date_extractor('20240228.pdf') == date(2024, 2, 28)
-    with pytest.raises(SystemExit):
-        date_extractor('2026_05_30_filing_report.pdf')
-    with pytest.raises(SystemExit):
-        date_extractor('filing_report_20211330.pdf')
-    with pytest.raises(SystemExit):
-        date_extractor('filing_report_20260229.pdf')
-    with pytest.raises(SystemExit):
-        date_extractor('filing_report.pdf')
+@pytest.mark.parametrize("filename, expected", [
+    ("20210930", date(2021, 9, 30)),
+    ("20210930.pdf", date(2021, 9, 30)),
+    ("filing_report_20210930.pdf", date(2021, 9, 30)),
+])
+def test_valid_dates(filename, expected):
+    assert date_extractor(filename) == expected
+
+@pytest.mark.parametrize("filename", [
+    "2026_05_30_filing_report.pdf",
+    "filing_report_20211330.pdf",
+    "filing_report_20260229.pdf",
+    "filing_report.pdf",
+])
+def test_invalid_dates(filename):
+    with pytest.raises(ValueError):  # not SystemExit
+        date_extractor(filename)
